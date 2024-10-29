@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace Simulator
 {
     internal class Creature
@@ -73,7 +75,38 @@ namespace Simulator
         {
             get { return $"{Name} [{Level}]"; }
         }
-    }
+
+        public void Go(Direction direction)
+        {
+        switch (direction)
+            {
+                case Direction.Up:
+                    Console.WriteLine($"{Name} goes up");
+                    break;
+                case Direction.Right:
+                    Console.WriteLine($"{Name} goes right");
+                    break;
+                case Direction.Down:
+                    Console.WriteLine($"{Name} goes down");
+                    break;
+                case Direction.Left:
+                    Console.WriteLine($"{Name} goes left");
+                    break;
+            }
+        }  
+        public void Go(Direction[] directions)
+        {
+            foreach (var direction in directions)
+            {
+                Go(direction);
+            }
+        }
+        public void Go(string directions)
+        {
+            var parsedDirections = DirectionParser.Parse(directions);
+            Go(parsedDirections);
+        }
+}
 }
 
 

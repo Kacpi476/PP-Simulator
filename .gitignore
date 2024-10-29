@@ -1,0 +1,13 @@
+*.o
+*.exe
+*.dll
+*.log
+node_modules/
+bin/
+obj/
+*.user
+*.suo
+build/
+dist/
+.vscode/
+.idea/
