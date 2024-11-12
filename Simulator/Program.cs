@@ -1,4 +1,6 @@
-﻿namespace Simulator;
+﻿using Simulator.Maps;
+
+namespace Simulator;
 
 internal class Program
 {
@@ -6,16 +8,10 @@ internal class Program
     {
         Console.WriteLine("Starting Simulator!\n");
         Point p = new(3, 10);
-        Console.WriteLine(p.Next(Direction.Right));          // (11, 25)
-        Console.WriteLine(p.NextDiagonal(Direction.Right));  // (11, 24) 
+        Console.WriteLine(p.Next(Direction.Right));
+        Console.WriteLine(p.NextDiagonal(Direction.Right));  
         Lab5a();
-        /* 
-        (2, 2); (5, 7)
-        (2, 2); (5, 7)
-        Punkty są współliniowe - chudy prostąkąt
-        (3, 3); (7, 8)
-        (5, 5) True
-        */
+        Lab5b();
     }
     public static void Lab5a()
     {
@@ -59,5 +55,24 @@ internal class Program
         {
             Console.WriteLine($"{e.Message}");
         }
+    }
+
+    static void Lab5b()
+    {
+        SmallSquareMap map = new SmallSquareMap(15);
+        Console.WriteLine($"Rozmiar mapy: {map.Size}");
+        Point startPoint = new Point(0, 0);
+        Point outsidePoint = new Point(-1, -1);
+        Console.WriteLine($"Czy {startPoint} należy do mapy: {map.Exist(startPoint)}"); 
+        Console.WriteLine($"Czy {outsidePoint} należy do mapy: {map.Exist(outsidePoint)}");
+        Point nextRight = map.Next(startPoint, Direction.Right);
+        Point nextUp = map.Next(startPoint, Direction.Up);
+        Console.WriteLine($"Na prawo od {startPoint} znajduje się: {nextRight}"); 
+        Console.WriteLine($"W górę od {startPoint} znajduje się: {nextUp}");
+        Point edgePoint = new Point(map.Size - 1, map.Size - 1);
+        Point outOfBounds = map.Next(edgePoint, Direction.Right);
+        Console.WriteLine($"{edgePoint}: {outOfBounds} <- Kraniec mapy");
+        Point diagonal = map.NextDiagonal(startPoint, Direction.Up);
+        Console.WriteLine($"Na skos od {startPoint} znajduje się: {diagonal}");
     }
 }
