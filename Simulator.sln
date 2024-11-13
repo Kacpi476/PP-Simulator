@@ -7,13 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csproj", "{22AF194E-BEC2-4B1E-B6B1-A0CD4BB3D6C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSimulator", "TestSimulator\TestSimulator.csproj", "{6C8B01B6-E4BA-42F7-A3B5-B4E2DF27D573}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A857D4A9-FDD7-463D-B6C6-79CAC45409C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +23,12 @@ Global
 		{22AF194E-BEC2-4B1E-B6B1-A0CD4BB3D6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22AF194E-BEC2-4B1E-B6B1-A0CD4BB3D6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22AF194E-BEC2-4B1E-B6B1-A0CD4BB3D6C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8B01B6-E4BA-42F7-A3B5-B4E2DF27D573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8B01B6-E4BA-42F7-A3B5-B4E2DF27D573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8B01B6-E4BA-42F7-A3B5-B4E2DF27D573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8B01B6-E4BA-42F7-A3B5-B4E2DF27D573}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
