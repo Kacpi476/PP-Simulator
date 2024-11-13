@@ -8,7 +8,6 @@ public class Elf : Creature
             public override int Power => 8 * Level + 2 * Agility;
             public void Sing()
             {
-                Console.WriteLine($"{Name} is singing.");
                 if (++SingCounter % 3 == 0 && agility < 10)
                 {
                     agility++;
