@@ -26,7 +26,7 @@ public class SmallTorusMapTests
         // Act & Assert
         // The way to check if method throws anticipated exception:
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-             new SmallTorusMap(size));
+            new SmallTorusMap(size));
     }
 
     [Theory]
