@@ -8,6 +8,11 @@ namespace Simulator
         private int level = 1;
         public Map? Map { get; private set; }
         public Point Position { get; private set; }
+        public void InitMapAndPosition(Map map, Point position) 
+        {
+            Map = map;
+            Position = position;
+        }
         private string name = "Unknown";
         
         public string Name
@@ -46,10 +51,25 @@ namespace Simulator
         public void Go(Direction direction)
         {
             if (Map == null)
-                return; 
+            {
+                Console.WriteLine("Creature's map is not set. Cannot move.");
+                return;
+            } 
             Point nextPosition = Map.Next(Position, direction);
-            Map.Move(this, Position, direction); 
-            Position = nextPosition;
+            if (!Map.Exist(nextPosition))
+            {
+                Console.WriteLine($"Invalid move. {this.Info} tried to move out of bounds.");
+                return;
+            }
+            try
+            {
+                Map.Move(this, Position, nextPosition);
+                Position = nextPosition;           
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to move {this.Info}: {ex.Message}");
+            }
         }
         public abstract string Info { get; }
         

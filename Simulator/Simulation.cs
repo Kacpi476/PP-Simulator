@@ -1,6 +1,5 @@
-using Simulator.Maps;
-using Simulator;
-
+﻿﻿using Simulator.Maps;
+namespace Simulator;
 public class Simulation
 {
     /// <summary>
@@ -32,17 +31,17 @@ public class Simulation
     /// </summary>
     public bool Finished { get; private set; } = false;
 
+    private int _currentMoveIndex = 0;
+
     /// <summary>
     /// Creature which will be moving current turn.
     /// </summary>
-    public Creature CurrentCreature => Creatures[turnIndex % Creatures.Count];
+    public Creature CurrentCreature => Creatures[_currentMoveIndex % Creatures.Count];
 
     /// <summary>
     /// Lowercase name of direction which will be used in current turn.
     /// </summary>
-    public string CurrentMoveName => Moves[turnIndex % Moves.Length].ToString().ToLower();
-
-    private int turnIndex = 0;
+    public string CurrentMoveName => Moves[_currentMoveIndex].ToString().ToLower();
 
     /// <summary>
     /// Simulation constructor.
@@ -54,16 +53,21 @@ public class Simulation
     public Simulation(Map map, List<Creature> creatures,
         List<Point> positions, string moves)
     {
-        if (creatures.Count == 0)
-            throw new ArgumentException("The creatures list cannot be empty.");
+        if (creatures == null || creatures.Count == 0)
+        {
+            throw new ArgumentException("List of creatures cannot be empty.");
+        }
 
         if (creatures.Count != positions.Count)
-            throw new ArgumentException("The number of creatures must match the number of starting positions.");
+        {
+            throw new ArgumentException("Number of creatures must match the number of starting positions.");
+        }
 
-        Map = map;
+        Map = map ?? throw new ArgumentNullException(nameof(map));
         Creatures = creatures;
         Positions = positions;
-        Moves = moves;
+        Moves = moves ?? throw new ArgumentNullException(nameof(moves));
+
         for (int i = 0; i < creatures.Count; i++)
         {
             var creature = creatures[i];
@@ -73,13 +77,11 @@ public class Simulation
             {
                 throw new ArgumentException($"Position {position} is outside the bounds of the map.");
             }
+            creature.InitMapAndPosition(map, position);
+            map.Add(creature, position);
 
-            map.Add(creature, position); 
-        
         }
-
     }
-
     /// <summary>
     /// Makes one move of current creature in current direction.
     /// Throw error if simulation is finished.
@@ -97,31 +99,24 @@ public class Simulation
             return;
         }
 
-        char currentMoveChar = Moves[0];
-
-        Moves = Moves.Substring(1);
-
+        char currentMoveChar = Moves[_currentMoveIndex];
         var directions = DirectionParser.Parse(currentMoveChar.ToString());
-        if (directions == null || directions.Count == 0)
-        {
-            return;
-        }
 
-    
-        var direction = directions[0];
-        if (CurrentCreature != null)
+        if (directions != null && directions.Count > 0)
         {
+            var direction = directions[0];
             CurrentCreature.Go(direction);
         }
-        else
-        {
-            throw new InvalidOperationException("Current creature is null.");
-        }
 
-        if (Moves.Length == 0)
+        // Advance to the next creature and move
+        _currentMoveIndex++;
+
+        // Check if all moves are done
+        if (_currentMoveIndex >= Moves.Length)
         {
             Finished = true;
         }
     }
+
 
 }
