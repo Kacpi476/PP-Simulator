@@ -1,10 +1,13 @@
 using System.Runtime.CompilerServices;
+using Simulator.Maps;
 
 namespace Simulator
 {
     public abstract class Creature
     {
         private int level = 1;
+        public Map? Map { get; private set; }
+        public Point Position { get; private set; }
         private string name = "Unknown";
         
         public string Name
@@ -39,20 +42,14 @@ namespace Simulator
             }
 
         }
-        public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-        public List<string> Go(List<Direction> directions)
+
+        public void Go(Direction direction)
         {
-            List<string> results = new List<string>(directions.Count);
-            for (int i = 0; i < directions.Count; i++)
-            {
-            results[i] = Go(directions[i]);
-            }
-            return results;
-        }
-        public List<string> Go(string directionsString)
-        {
-            List<Direction> directions = DirectionParser.Parse(directionsString);
-            return Go(directions);
+            if (Map == null)
+                return; 
+            Point nextPosition = Map.Next(Position, direction);
+            Map.Move(this, Position, direction); 
+            Position = nextPosition;
         }
         public abstract string Info { get; }
         
