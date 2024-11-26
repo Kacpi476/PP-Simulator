@@ -40,17 +40,22 @@ namespace Simulator
 
         }
         public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-        public string[] Go(Direction[] directions)
+        public List<string> Go(List<Direction> directions)
         {
-            var result = new string[directions.Length];
-            for (int i = 0; i < directions.Length; i++)
+            List<string> results = new List<string>(directions.Count);
+            for (int i = 0; i < directions.Count; i++)
             {
-            result[i] = Go(directions[i]);
+            results[i] = Go(directions[i]);
             }
-            return result;
+            return results;
         }
-        public string[] Go(string directionSeq) => Go(DirectionParser.Parse(directionSeq));
+        public List<string> Go(string directionsString)
+        {
+            List<Direction> directions = DirectionParser.Parse(directionsString);
+            return Go(directions);
+        }
         public abstract string Info { get; }
+        
         public override string ToString() => $"{GetType().Name.ToUpper()}: {Info}";
     }
 }

@@ -1,27 +1,27 @@
 ﻿namespace Simulator;
 public static class DirectionParser
 {
-    public static Direction[] Parse(string input)
+    public static List<Direction> Parse(string input)
     {
-        var direction = new List<Direction>();
+        List<Direction> directions = new List<Direction>();
         foreach (var ch in input.ToUpper())
         {
             switch (ch)
             {
             case 'U':
-                direction.Add(Direction.Up);
+                directions.Add(Direction.Up);
                 break;
             case 'R':
-                direction.Add(Direction.Right);
+                directions.Add(Direction.Right);
                 break;
             case 'D':
-                direction.Add(Direction.Down);
+                directions.Add(Direction.Down);
                 break;
             case 'L':
-                direction.Add(Direction.Left);
+                directions.Add(Direction.Left);
                 break;
             }
         }
-        return direction.ToArray();
+        return directions;
     }
 }

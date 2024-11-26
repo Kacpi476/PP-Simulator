@@ -1,28 +1,25 @@
 ﻿namespace Simulator.Maps;
-public class SmallTorusMap : Map
-{
-    public int Size { get; }
-    private Rectangle boundaries;
-    public SmallTorusMap(int size)
+
+    public class SmallTorusMap : SmallMap
     {
-        if (size < 5 || size > 20)
-            throw new ArgumentOutOfRangeException(nameof(size), "Rozmiar mapy musi być pomiędzy 5 a 20.");
-        Size = size;
-        boundaries = new Rectangle(0, 0, Size - 1, Size - 1);
-    }
-    public override bool Exist(Point p)
-    {
-        return boundaries.Contains(p);
-    }
+
+        private readonly int sizeX;
+        private readonly int sizeY;
+
+
+        public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY) {
+            this.sizeX = sizeX;
+            this.sizeY = sizeY;
+        }
     public override Point Next(Point p, Direction d)
     {
         Point nextPoint = p.Next(d);
         return d switch
         {
-            Direction.Up => Exist(nextPoint) ? nextPoint : new Point(p.X, 0),
-            Direction.Right => Exist(nextPoint) ? nextPoint : new Point(0, p.Y),
-            Direction.Down => Exist(nextPoint) ? nextPoint : new Point(p.X, Size - 1),
-            Direction.Left => Exist(nextPoint) ? nextPoint : new Point(Size - 1, p.Y),
+            Direction.Up => Exist(nextPoint) ? nextPoint : new Point(p.X, (p.Y + 1) % sizeY),
+            Direction.Right => Exist(nextPoint) ? nextPoint : new Point((p.X + 1) % sizeX, p.Y),
+            Direction.Down => Exist(nextPoint) ? nextPoint : new Point((p.X + 1) % sizeX, p.Y),
+            Direction.Left => Exist(nextPoint) ? nextPoint : new Point((p.X - 1 + sizeX) % sizeX, p.Y),
             _ => default,
         };
     }
@@ -31,10 +28,10 @@ public class SmallTorusMap : Map
         Point nextPoint = p.NextDiagonal(d);
         return d switch
         {
-            Direction.Up => Exist(nextPoint) ? nextPoint : new Point((p.X + 1) % Size, (p.Y + 1) % Size),
-            Direction.Right => Exist(nextPoint) ? nextPoint : new Point((p.X + 1) % Size, (p.Y - 1 + Size) % Size),
-            Direction.Down => Exist(nextPoint) ? nextPoint : new Point((p.X - 1 + Size) % Size, (p.Y - 1 + Size) % Size),
-            Direction.Left => Exist(nextPoint) ? nextPoint : new Point((p.X - 1 + Size) % Size, (p.Y + 1) % Size),
+            Direction.Up => Exist(nextPoint) ? nextPoint : new Point((p.X + 1) % sizeX, (p.Y + 1) % sizeY),
+            Direction.Right => Exist(nextPoint) ? nextPoint : new Point((p.X + 1) % sizeX, (p.Y - 1 + sizeY) % sizeY),
+            Direction.Down => Exist(nextPoint) ? nextPoint : new Point((p.X - 1 + sizeX) % sizeX, (p.Y - 1 + sizeY) % sizeY),
+            Direction.Left => Exist(nextPoint) ? nextPoint : new Point((p.X - 1 + sizeX) % sizeX, (p.Y + 1) % sizeY),
             _ => default,
         };
     }
