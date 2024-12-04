@@ -3,7 +3,7 @@ using Simulator.Maps;
 
 namespace Simulator
 {
-    public abstract class Creature
+    public abstract class Creature : IMappable
     {
         private int level = 1;
         public Map? Map { get; private set; }
@@ -63,7 +63,7 @@ namespace Simulator
             }
             try
             {
-                Map.Move(this, Position, nextPosition);
+                Map.Move((IMappable)this, Position, nextPosition);
                 Position = nextPosition;           
             }
             catch (Exception ex)
